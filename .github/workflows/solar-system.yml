@@ -36,9 +36,12 @@ jobs:
           run: npm install
     
         - name: Unit Testing
+          id: node-test
           run: npm test
           
         - name: Archive Test Result
+          # if: steps.node-test.outcome == 'failure'
+          if:  always()
           uses: actions/upload-artifact@v3
           with:
             name: Mocha-Test-Result
@@ -67,3 +70,4 @@ jobs:
           uses: actions/upload-artifact@v3
           with:
             name: Code-Coverage-Report
+            path: coverage/
